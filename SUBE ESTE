@@ -1,0 +1,96 @@
+import javax.swing.JOptionPane;
+
+/**
+ * @author genes
+ */
+public class Facturas {
+    private String NombreVendedor;
+    private int Cedula;
+    private int codigoFactura;
+    private int montoFactura;
+    private int mes;
+    private int ProductosElectricos;
+    private int ProductosAutomotrices;
+    private int ProductosConstruccion;
+    private static int totalFacturas = 0;
+    private static double totalFacturado = 0;
+
+    public Facturas(String NombreVendedor, int Cedula, int codigoFactura, int montoFactura, int mes, int ProductosElectricos, int ProductosAutomotrices, int ProductosConstruccion) {
+        this.NombreVendedor = NombreVendedor;
+        this.Cedula = Cedula;
+        this.codigoFactura = codigoFactura;
+        this.montoFactura = montoFactura;
+        this.mes = mes;
+        this.ProductosElectricos = ProductosElectricos;
+        this.ProductosAutomotrices = ProductosAutomotrices;
+        this.ProductosConstruccion = ProductosConstruccion;
+        
+        totalFacturado += montoFactura;
+        totalFacturas++;
+    }
+
+    public int calcularPuntosVendedor() {
+        int puntos = 0;
+        if (ProductosElectricos > 0 && ProductosAutomotrices > 0 && ProductosConstruccion > 0) {
+            puntos += 3;
+        } else {
+            if (ProductosElectricos >= 3) puntos += 1;
+            if (ProductosAutomotrices > 4) puntos += 1;
+            if (ProductosConstruccion > 0) puntos += 2;
+        }
+        if (montoFactura > 50000) {
+            puntos += 1;
+        }
+        return puntos;
+    }
+
+    public double calcularBono() {
+        double bono = 0;
+        if (ProductosElectricos > 0 && ProductosAutomotrices > 0 && ProductosConstruccion > 0) {
+            bono = montoFactura * 0.10;
+        } else {
+            if (ProductosElectricos >= 3) bono += montoFactura * 0.04;
+            else bono += montoFactura * 0.02;
+            if (ProductosAutomotrices > 4) bono += montoFactura * 0.04;
+            else bono += montoFactura * 0.02;
+            if (ProductosConstruccion > 0) bono += montoFactura * 0.08;
+        }
+        if (montoFactura > 50000) {
+            bono += montoFactura * 0.05;
+        }
+        if (totalFacturas > 3 || totalFacturado > 300000) {
+            bono += 20000;
+        }
+        return bono;
+    }
+
+    public static void main(String[] args) {
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del vendedor:");
+        int cedula = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cédula del vendedor:"));
+        int codigoFactura = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el código de la factura:"));
+        int montoFactura = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el monto de la factura:"));
+        int mes = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de mes (1-12):"));
+        String sucursal = JOptionPane.showInputDialog("Ingrese la sucursal:");
+        String respuestaVehiculo = JOptionPane.showInputDialog("¿El vendedor cuenta con vehículo propio? (si/no)");
+        boolean tieneVehiculo = respuestaVehiculo.compareToIgnoreCase("si") == 0;
+        int productosElectricos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de productos eléctricos:"));
+        int productosAutomotrices = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de productos automotrices:"));
+        int productosConstruccion = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de productos de construcción:"));
+
+        Facturas factura = new Facturas(nombre, cedula, codigoFactura, montoFactura, mes, productosElectricos, productosAutomotrices, productosConstruccion);
+        int puntos = factura.calcularPuntosVendedor();
+        double bono = factura.calcularBono();
+        boolean logroBonoExtra = bono >= 20000;
+
+        JOptionPane.showMessageDialog(null, "Nombre del Vendedor: " + nombre +
+                "\nCódigo Factura: " + codigoFactura +
+                "\nMes: " + mes +
+                "\nTotal Vendido en Facturas: " + totalFacturado +
+                "\nTotal de Comisiones: " + bono +
+                "\n¿Logró el Bono Extra?: " + (if (logroBonoExtra) "Sí"; else "No";) +
+                "\nPuntos Obtenidos: " + puntos +
+                "\n¿Cuenta con Vehículo Propio?: " + (if (tieneVehiculo) "Sí"; else "No";) +
+                "\nSucursal: " + sucursal);
+    }
+}
+
