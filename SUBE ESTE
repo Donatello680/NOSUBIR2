@@ -72,7 +72,7 @@ public class Facturas {
         int mes = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de mes (1-12):"));
         String sucursal = JOptionPane.showInputDialog("Ingrese la sucursal:");
         String respuestaVehiculo = JOptionPane.showInputDialog("¿El vendedor cuenta con vehículo propio? (si/no)");
-        boolean tieneVehiculo = respuestaVehiculo.compareToIgnoreCase("si") == 0;
+        boolean tieneVehiculo = respuestaVehiculo.compareTo("si") == 0;
         int productosElectricos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de productos eléctricos:"));
         int productosAutomotrices = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de productos automotrices:"));
         int productosConstruccion = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad de productos de construcción:"));
