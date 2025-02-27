@@ -12,7 +12,8 @@ public class Facturas {
     private int ProductosElectricos;
     private int ProductosAutomotrices;
     private int ProductosConstruccion;
-    private static int totalFacturas = 0;
+    private int totalFacturas;
+    private boolean tieneVehiculo;
     private static double totalFacturado = 0;
 
     public Facturas(String NombreVendedor, int Cedula, int codigoFactura, int montoFactura, int mes, int ProductosElectricos, int ProductosAutomotrices, int ProductosConstruccion) {
@@ -26,7 +27,7 @@ public class Facturas {
         this.ProductosConstruccion = ProductosConstruccion;
         
         totalFacturado += montoFactura;
-        totalFacturas++;
+        ;
     }
 
     public int calcularPuntosVendedor() {
@@ -66,6 +67,7 @@ public class Facturas {
 
     public static void main(String[] args) {
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del vendedor:");
+int totalFacturas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el total de facturas:"));
         int cedula = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cédula del vendedor:"));
         int codigoFactura = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el código de la factura:"));
         int montoFactura = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el monto de la factura:"));
@@ -93,4 +95,3 @@ public class Facturas {
                 "\nSucursal: " + sucursal);
     }
 }
-
